@@ -105,6 +105,10 @@ O fluxo básico do protocolo TFTP ocorre da seguinte forma:
 
 # 🛠️ Tecnologias e Padrões Utilizados
 
+## Ferramenta para modelagem de diagramas
+
+-   Drawio
+
 ## Linguagem
 
 -   Python 3
