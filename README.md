@@ -33,28 +33,57 @@ Diagram)**.
 
 # 🏗️ Arquitetura do Sistema (Modelo C4 - Nível 3)
 
-```{=html}
-<p align="center">
-```
-`<img src="docs/c4-diagram.png" width="800"/>`{=html}
-```{=html}
-</p>
-```
+![Arquitetura C4 do Sistema TFTP](docs/c4-diagram.png)
+
 O diagrama acima apresenta a arquitetura de componentes do sistema TFTP,
 mostrando a separação entre cliente, servidor e armazenamento.
 
 ------------------------------------------------------------------------
 
-# 🧩 Componentes do Sistema
+# 🔍 Detalhamento dos Componentes
 
-  Componente           Tipo                 Responsabilidade
-  -------------------- -------------------- ------------------------------------------
-  Interface CLI        Cliente              Recebe comandos `get` e `put` do usuário
-  TFTP Client Module   Cliente              Implementa a lógica do protocolo TFTP
-  UDP Socket           Cliente / Servidor   Gerencia comunicação via UDP
-  Request Handler      Servidor             Processa requisições RRQ e WRQ
-  File Manager         Servidor             Gerencia leitura e escrita de arquivos
-  Filesystem           Armazenamento        Armazena arquivos transferidos
+## Cliente TFTP
+
+-   **Interface CLI**
+    -   Responsável por receber comandos do usuário via terminal.
+    -   Permite executar operações de transferência utilizando os
+        comandos:
+        -   `get` -- baixar arquivo do servidor
+        -   `put` -- enviar arquivo ao servidor.
+-   **TFTP Client Module**
+    -   Implementa a lógica central do protocolo TFTP.
+    -   Responsável por criar requisições:
+        -   **RRQ (Read Request)** -- leitura de arquivo
+        -   **WRQ (Write Request)** -- envio de arquivo.
+    -   Gerencia o fluxo de pacotes **DATA, ACK e ERROR**.
+-   **UDP Socket (Cliente)**
+    -   Responsável pelo envio e recebimento de datagramas UDP.
+    -   Realiza a comunicação com o servidor através da rede.
+
+------------------------------------------------------------------------
+
+## Servidor TFTP
+
+-   **UDP Socket (Servidor)**
+    -   Escuta requisições iniciais na **porta UDP 69**.
+    -   Gerencia a comunicação com clientes utilizando **portas
+        efêmeras** durante a transferência.
+-   **Request Handler**
+    -   Processa requisições **RRQ** e **WRQ** enviadas pelo cliente.
+    -   Coordena o fluxo de comunicação entre cliente e servidor.
+-   **File Manager**
+    -   Responsável pela leitura e escrita de arquivos no sistema
+        operacional.
+    -   Interage diretamente com o **filesystem**.
+
+------------------------------------------------------------------------
+
+## Armazenamento
+
+-   **Filesystem**
+    -   Representa o armazenamento local no sistema operacional.
+    -   Responsável por manter os arquivos transferidos de forma
+        persistente.
 
 ------------------------------------------------------------------------
 
