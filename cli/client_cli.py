@@ -8,7 +8,7 @@ def main():
     parser = argparse.ArgumentParser()
 
     parser.add_argument("server")
-    parser.add_argument("command", choices=["get"])
+    parser.add_argument("command", choices=["get", "put"])
     parser.add_argument("filename")
 
     args = parser.parse_args()
@@ -17,6 +17,8 @@ def main():
 
     if args.command == "get":
         client.download(args.filename)
+    elif args.command == "put":
+        client.upload(args.filename)
 
 
 if __name__ == "__main__":
