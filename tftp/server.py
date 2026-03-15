@@ -44,6 +44,8 @@ class TFTPServer:
                     chunk = f.read(BLOCK_SIZE)
 
                     packet = create_data(block, chunk)
+                    
+                    print(f"Sending block {block}")
 
                     sock.sendto(packet, addr)
 
