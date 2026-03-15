@@ -29,3 +29,12 @@ def create_ack(block: int) -> bytes:
 
 def parse_opcode(packet: bytes) -> int:
     return struct.unpack("!H", packet[:2])[0]
+
+def create_wrq(filename: str, mode: str = "octet") -> bytes:
+    return (
+        struct.pack("!H", WRQ)
+        + filename.encode()
+        + b"\0"
+        + mode.encode()
+        + b"\0"
+    )
