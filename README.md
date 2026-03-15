@@ -152,7 +152,7 @@ O fluxo básico do protocolo TFTP ocorre da seguinte forma:
 ## Iniciar o servidor
 
 ``` bash
-python cli/server_cli.py
+python -m cli.server_cli
 ```
 
 ## Executar o cliente
@@ -160,13 +160,13 @@ python cli/server_cli.py
 ### Baixar arquivo do servidor
 
 ``` bash
-python cli/client_cli.py 127.0.0.1 get arquivo.txt
+python -m cli.client_cli 127.0.0.1 get arquivo.txt
 ```
 
 ### Enviar arquivo para o servidor
 
 ``` bash
-python cli/client_cli.py 127.0.0.1 put arquivo.txt
+python -m cli.client_cli.py 127.0.0.1 put arquivo.txt
 ```
 
 ### Estrutura do comando
