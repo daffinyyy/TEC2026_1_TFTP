@@ -16,6 +16,8 @@ class TFTPClient:
         self.port = port
 
     def download(self, filename: str) -> None:
+        
+        print(f"Downloading {filename} from {self.server_ip}")
 
         sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
@@ -34,6 +36,8 @@ class TFTPClient:
                 if opcode == DATA:
 
                     block = int.from_bytes(data[2:4], "big")
+                    
+                    print(f"Received block {block}")
 
                     chunk = data[4:]
 
