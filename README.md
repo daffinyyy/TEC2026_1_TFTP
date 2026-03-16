@@ -214,17 +214,17 @@ Cliente TFTP via terminal:
 O servidor inicia corretamente  
 ![Servidor rodando via CLI](tests/run_server.png)  
 
-- **T02. Download e Upload com o cliente**
+- **T02. Download e Upload com o cliente**  
 O download (get) de arquivos funciona corretamente:  
 ![Download de arquivos via CLI](tests/client_download.png)  
 Bem como o upload (put) de arquivos:  
 ![Upload de arquivos via CLI](tests/client_upload.png)  
 
-- **T03. Testar resposta a arquivos inexistentes**
+- **T03. Testar resposta a arquivos inexistentes**  
 Após alguns ajustes, o servidor envia corretamente o "erro 5" para o cliente, identificando que o arquivo solicitado não existe.  
 ![Solicitando um arquivo inexistente](tests/nofile_error.png)  
 
-- **T04. Testar resposta a arquivos duplicados**
+- **T04. Testar resposta a arquivos duplicados**  
 Inicialmente o servidor também falhou nesse teste. O comportamento esperado seria de um alerta que o arquivo já existe, entretanto o arquivo estava somente sendo sobrescrito. A condição de verificação de duplicidade foi implementada e o agora funciona corretamente.  
 ![Upload de arquivos duplicados](tests/duplicated_error.png)  
 
