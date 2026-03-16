@@ -1,4 +1,6 @@
 import socket
+import os
+from tftp.protocol import create_error
 
 from tftp.protocol import (
     RRQ,
@@ -8,13 +10,14 @@ from tftp.protocol import (
     BLOCK_SIZE,
     create_data,
     create_ack,
+    create_error,
     parse_opcode,
 )
 
 
 class TFTPServer:
 
-    def __init__(self, host: str = "0.0.0.0", port: int = 6969):
+    def __init__(self, host: str = "0.0.0.0", port: int = 69):
         self.host = host
         self.port = port
 
@@ -60,17 +63,23 @@ class TFTPServer:
                         print(f"Envio do arquivo '{filename}' para o cliente concluído.")
                         break
 
-                    block += 1
+                    block = (block + 1) % 65536
 
         except FileNotFoundError:
             print("Arquivo não encontrado")
+            error_packet = create_error(1, "File not found")
+            sock.sendto(error_packet, addr)
 
     def handle_wrq(self, sock, data, addr):
         filename = data[2:].split(b"\0")[0].decode()
         print(f"Cliente iniciou o upload do arquivo: {filename}")
 
         save_filename = f"server_{filename}"
-
+        if os.path.exists(save_filename):
+            print("Erro: arquivo já existe no servidor.")
+            error_packet = create_error(6, "File already exists")
+            sock.sendto(error_packet, addr)
+            return
         ack = create_ack(0)
         sock.sendto(ack, addr)
 
