@@ -200,13 +200,40 @@ Cliente TFTP via terminal:
 
     tftp
 
-Durante os testes foi verificada a correta troca de pacotes:
+## Roteiro de testes
 
--   RRQ
--   WRQ
--   DATA
--   ACK
--   ERROR
+1. Iniciar o servidor.
+2. Download e Upload com o cliente.
+3. Testar resposta a arquivos inexistentes.
+4. Testar resposta a arquivos duplicados.
+5. Testar robustez da transferência.
+
+### Resultados
+
+- **T01. Iniciar o servidor**
+O servidor inicia corretamente  
+![Servidor rodando via CLI](tests/run_server.png)  
+
+- **T02. Download e Upload com o cliente**
+O download (get) de arquivos funciona corretamente:  
+![Download de arquivos via CLI](tests/client_download.png)  
+Bem como o upload (put) de arquivos:  
+![Upload de arquivos via CLI](tests/client_upload.png)  
+
+- **T03. Testar resposta a arquivos inexistentes**
+Após alguns ajustes, o servidor envia corretamente o "erro 5" para o cliente, identificando que o arquivo solicitado não existe.  
+![Solicitando um arquivo inexistente](tests/nofile_error.png)  
+
+- **T04. Testar resposta a arquivos duplicados**
+Inicialmente o servidor também falhou nesse teste. O comportamento esperado seria de um alerta que o arquivo já existe, entretanto o arquivo estava somente sendo sobrescrito. A condição de verificação de duplicidade foi implementada e o agora funciona corretamente.  
+![Upload de arquivos duplicados](tests/duplicated_error.png)  
+
+- **T05. Testar robustez da transferência**  
+O servidor foi testado com arquivos de dois tamanhos: 100kb e 50mb. O arquivo de 100kb passou pelo teste, porém o de 50mb precisou que houvesse pequenos ajustes. O contador de blocos foi refatorado para aceitar mais de 65535 blocos, e então o upload foi realizado corretamente.  
+Foi verificado também a integridade dos arquivos, tanto no upload quanto no download. Em ambos os arquivos não houve perda de informação.  
+![Upload e dowload de arquivos grandes](tests/bigfile.png)  
+
+
 
 ------------------------------------------------------------------------
 

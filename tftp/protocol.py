@@ -38,3 +38,6 @@ def create_wrq(filename: str, mode: str = "octet") -> bytes:
         + mode.encode()
         + b"\0"
     )
+
+def create_error(code: int, message: str) -> bytes:
+    return struct.pack("!HH", ERROR, code) + message.encode() + b"\0"

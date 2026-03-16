@@ -14,7 +14,7 @@ from tftp.protocol import (
 
 class TFTPClient:
 
-    def __init__(self, server_ip: str, port: int = 6969):
+    def __init__(self, server_ip: str, port: int = 69):
         self.server_ip = server_ip
         self.port = port
 
@@ -37,6 +37,10 @@ class TFTPClient:
                 data, addr = sock.recvfrom(1024)
 
                 opcode = parse_opcode(data)
+
+                if opcode == 5:
+                    print("Erro recebido do servidor.")
+                    return
 
                 if opcode == DATA:
 
@@ -66,6 +70,10 @@ class TFTPClient:
         # 2. Aguarda o ACK 0 do servidor para começar a enviar
         data, server_addr = sock.recvfrom(1024)
         opcode = parse_opcode(data)
+
+        if opcode == 5:
+            print("Erro recebido do servidor: arquivo já existe.")
+            return
         
         if opcode == ACK:
             block_ack = int.from_bytes(data[2:4], "big")
@@ -89,7 +97,7 @@ class TFTPClient:
                                 print(f"Upload de '{filename}' concluído com sucesso.")
                                 break
                             
-                            block += 1
+                            block = (block + 1) % 65536
                             
                 except FileNotFoundError:
                     print("Erro: Arquivo não encontrado para upload.") 
