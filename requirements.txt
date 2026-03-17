@@ -1,0 +1,12 @@
+# Projeto TFTP
+# Dependências necessárias
+
+# Requer Python 3.10 ou superior
+
+# Este projeto utiliza apenas bibliotecas padrão do Python:
+# argparse
+# socket
+# os
+# io
+
+# Nenhuma instalação adicional é necessária
