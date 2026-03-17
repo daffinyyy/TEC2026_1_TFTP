@@ -233,7 +233,16 @@ O servidor foi testado com arquivos de dois tamanhos: 100kb e 50mb. O arquivo de
 Foi verificado também a integridade dos arquivos, tanto no upload quanto no download. Em ambos os arquivos não houve perda de informação.  
 ![Upload e dowload de arquivos grandes](tests/bigfile.png)  
 
+- **T06. Teste de timeout na transferência**  
+Durante a transferência de um arquivo de grande porte, o servidor foi interrompido manualmente utilizando o comando Ctrl + C, com o objetivo de simular uma falha de comunicação durante a transmissão dos dados. No início do processo, o cliente estava recebendo os blocos normalmente, conforme mostrado abaixo:
 
+![Cliente recebendo blocos](tests/client_transfer_in_progress.png)
+
+Após a interrupção do servidor, a transferência foi interrompida abruptamente e não foi concluída com sucesso, conforme indicado pela mensagem de interrupção:
+
+![Transferência interrompida](tests/client_transfer_interrupted.png)
+
+Esse comportamento demonstra que o sistema depende de comunicação contínua entre cliente e servidor, e que qualquer interrupção impede a conclusão correta da transferência.
 
 ------------------------------------------------------------------------
 
